@@ -1,45 +1,76 @@
 <template>
-    <div id="help-modal" class="modal active" v-show="visible">
-    <a href="#" class="modal-overlay" aria-label="Close" @click="close()" />
-    <div class="modal-container">
-      <div class="modal-header">
-        <a href="#" class="btn btn-clear float-right" aria-label="Close" @click="close()" />
-        <div class="modal-title h4">
-          Help, Tips & Tricks, FAQ
-        </div>
-      </div>
-      <div class="modal-body">
-        <div class="content">
-            <h5>Deck Input</h5>
-            <textarea id="deck-pokemon"></textarea>
-            <textarea id="deck-trainers"></textarea>
-            <textarea id="deck-energy"></textarea>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <a href="#" class="btn btn-link" aria-label="Close" @click="close()">Close</a>
-      </div>
-    </div>
-  </div>
+  <dialog id="help-modal" class="modal active" :open="visible" @click="clickOverlay">
+    <article>
+      <h2>Configuration</h2>
+      <form>
+        <fieldset>
+          <label>Deck</label>
+          <textarea id="deck" v-model="input.deck" placeholder="Pokemon&#10;1 Farfetch'd&#10;3 Hitmonchan (BS2-008)&#10;&#10;Trainers&#10;4 Bill&#10;4 Professor Oak&#10;&#10;Energy&#10;9 Fighting Energy" autofocus></textarea>
+          <small id="email-helper">
+            <p>Input as sections divided by an empty line. The first line of each section will be used for menus.</p>
+          </small>
+        </fieldset>
+      </form>
+      <footer>
+        <button class="secondary" aria-label="Cancel" @click="close()">Cancel</button>
+        <button class="primary" aria-label="Save" @click="save()">Save</button>
+      </footer>
+    </article>
+  </dialog>
 </template>
 
 <script lang="ts">
-export default {
-    props: {},
-    data() {
-        return {
-            visible: false,
-        }
-    },
-    methods: {
-        // show() {
-        //     this.visible = true;
-        //     this.$emit('show');
-        // },
-        // close() {
-        //     this.visible = false;
-        //     this.$emit('close');
-        // },
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  emits: [ 'show', 'close', 'config-change' ],
+  props: {},
+  data() {
+    return {
+      visible: false as boolean,
+      input: {
+        deck: "" as string,
+      }
     }
-}
+  },
+  mounted() {
+    this.loadFromStorage();
+  },
+  methods: {
+    clickOverlay(event: Event): void {
+      if (event.target === event.currentTarget) {
+        this.close();
+      }
+    },
+    show(): void {
+      this.visible = true;
+      this.$emit('show');
+    },
+    close(): void {
+      this.visible = false;
+      this.$emit('close');
+    },
+    save(): void {
+      this.close();
+      this.persistToStorage();
+      this.emitState();
+    },
+    emitState(): void {
+      this.$emit('config-change', this.input);
+    },
+    loadFromStorage(): void {
+      this.input.deck = localStorage.getItem('deck-config') ?? '';
+      this.emitState();
+    },
+    persistToStorage(): void {
+      localStorage.setItem('deck-config', this.input.deck);
+    },
+  }
+});
 </script>
+
+<style lang="scss" scoped>
+#deck {
+  height: 10rem;
+}
+</style>
