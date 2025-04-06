@@ -21,6 +21,11 @@
           <NestedMenu :config="activeMenu" :has-parent="traversalPath.length != 0" @traverse="onTraverse" />
         </div>
       </section>
+      <!-- <section id="freetext">
+        <div class="container">
+          <textarea id="freetext-input"></textarea>
+        </div>
+      </section> -->
     </div>
   </div>
 </template>
@@ -176,5 +181,9 @@ export default defineComponent({
   --pico-block-spacing-vertical: 3rem;
   max-height: 100px;
   overflow-y: scroll;
+}
+
+#freetext-input {
+  height: 8rem;
 }
 </style>

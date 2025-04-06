@@ -1,5 +1,5 @@
 <template>
-  <div class="log-title">Last Message:</div>
+  <div class="log-title">Most Recent Input:</div>
   <div class="log-entry" v-for="(entry, index) in entries.slice(-1)" :key="index" v-html="entry"></div>
   <div class="log-entry" v-if="entries.length === 0"><code>None</code></div>
 </template>
