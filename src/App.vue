@@ -99,7 +99,7 @@ export default defineComponent({
               });
           })
           .map(chunk => {
-            return [chunk[0], chunk.slice(1)];
+            return [chunk[0].split(':')[0], chunk.slice(1)];
           })
         );
       } else {
