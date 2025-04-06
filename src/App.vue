@@ -5,6 +5,7 @@
         <li><strong>Poke @ Griselbrand</strong></li>
       </ul>
       <ul>
+        <li id="empty-warning" v-if="input.deck === ''">No Decklist Set!</li>
         <li><button class="outline contrast" @click="$refs.configModal.show()">Config</button></li>
       </ul>
     </nav>
@@ -164,6 +165,23 @@ export default defineComponent({
 #nav-header {
   --pico-nav-element-spacing-vertical: 0.25rem;
   --pico-nav-element-spacing-horizontal: 0.5rem;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+#empty-warning {
+  color: var(--pico-del-color);
+  animation: pulse 2s infinite;
 }
 
 #menu {
