@@ -22,11 +22,6 @@
           <NestedMenu :config="activeMenu" :has-parent="traversalPath.length != 0" @traverse="onTraverse" />
         </div>
       </section>
-      <!-- <section id="freetext">
-        <div class="container">
-          <textarea id="freetext-input"></textarea>
-        </div>
-      </section> -->
     </div>
   </div>
 </template>

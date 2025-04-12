@@ -10,6 +10,16 @@
       <button class="nav prev outline" v-show="showPagination" :disabled="!hasPrevious" @click="pageIndex -= 1">Previous Page</button>
       <button class="nav next outline" v-show="showPagination" :disabled="!hasNext" @click="pageIndex += 1">Next Page</button>
     </div>
+
+    <div id="freetext-input" style="margin-top:1.5rem;">
+      <textarea style="height: 5rem;" v-model="freetextInput" ref="freetext"></textarea>
+
+      <div class="grid">
+        <!-- <button class="secondary outline">Show Textarea</button> -->
+        <div></div>
+        <button class="secondary outline" @click="clearTextarea()">Clear Textarea</button>
+      </div>
+    </div>
 </template>
 
 <script lang="ts">
@@ -35,6 +45,7 @@ export default defineComponent({
   data() {
     return {
       pageIndex: 0 as number,
+      freetextInput: "" as string,
     }
   },
   computed: {
@@ -64,6 +75,10 @@ export default defineComponent({
       }
       return index >= (PAGE_SIZE * this.pageIndex) && index < (PAGE_SIZE * (this.pageIndex + 1));
     },
+    clearTextarea(): void {
+      this.freetextInput = "";
+      (this.$refs["freetext"] as any).focus();
+    }
   },
 });
 </script>
