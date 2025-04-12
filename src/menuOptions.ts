@@ -104,8 +104,9 @@ export default {
       children: [
         { name: 'Yes', },
         { name: 'No', },
+        { name: 'Fail to Find', },
         { name: 'Call Judge', },
-        { name: '$notepad', },
+        // { name: '$notepad', },
       ],
     },
   ],
